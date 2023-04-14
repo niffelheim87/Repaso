@@ -15,5 +15,16 @@ class MainActivity : AppCompatActivity() {
 
         // Crear una instancia de la clase BinaryConverter
         val binaryConverter = BinaryConverter()
+
+        binding.swCambiar.setOnCheckedChangeListener { _, isChecked ->
+
+            // código que ejecute cuando el Switch cambie de estado
+            if (isChecked) {
+                // El Switch está activado
+            } else {
+                // El Switch está desactivado
+            }
+        }
+
     }
 }
