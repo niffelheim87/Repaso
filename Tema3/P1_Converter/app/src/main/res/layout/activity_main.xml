@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/tv_numero"
+        android:id="@+id/et_binario"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Binary"
@@ -17,10 +17,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.2"
         app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.7" />
+        app:layout_constraintWidth_percent="0.7"
+        android:autofillHints="Binary" />
 
     <EditText
-        android:id="@+id/et_resultado"
+        android:id="@+id/et_decimal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
@@ -28,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_numero"
+        app:layout_constraintTop_toBottomOf="@+id/et_binario"
         app:layout_constraintVertical_bias="0.05"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.7"/>
@@ -40,7 +41,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_resultado"
+        app:layout_constraintTop_toBottomOf="@+id/et_decimal"
         app:layout_constraintVertical_bias="0.35000002" />
 
     <TextView
@@ -52,7 +53,7 @@
         app:layout_constraintEnd_toStartOf="@+id/sw_cambiar"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_resultado"
+        app:layout_constraintTop_toBottomOf="@+id/et_decimal"
         app:layout_constraintVertical_bias="0.35000002" />
 
     <TextView
@@ -64,14 +65,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toEndOf="@+id/sw_cambiar"
-        app:layout_constraintTop_toBottomOf="@+id/et_resultado"
+        app:layout_constraintTop_toBottomOf="@+id/et_decimal"
         app:layout_constraintVertical_bias="0.35000002" />
 
     <Button
         android:id="@+id/BTNcalcular"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="CALCULATE"
+        android:background="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
