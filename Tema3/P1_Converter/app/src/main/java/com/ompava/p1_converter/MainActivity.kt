@@ -9,95 +9,68 @@ import com.ompava.p1_converter.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val binaryConverter = BinaryConverter()
+    private val MAX_BINARY_LENGTH = 10
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Crear una instancia de la clase BinaryConverter
+        binding.BTNcalcular.setOnClickListener() {
+            calcular()
+        }
+    }
+
+    private fun calcular() {
         val etBinario = binding.etBinario
         val etDecimal = binding.etDecimal
         val swCambiar = binding.swCambiar
-        val binaryConverter = BinaryConverter()
 
-        binding.BTNcalcular.setOnClickListener() {
-
-            // Listener que comprueba si esta activado el switch
-            val toDecimal = swCambiar.isChecked
-
-            // El Switch está activado y cambia a decimal
-            if (toDecimal) {
-                // Comprobamos que etBinario no este vacio
-                if (etBinario.text.isNotEmpty()) {
-                    // Comprobamos que el numero sea Binario
-                    if (binaryConverter.esBinario(etBinario.text.toString())) {
-                        // Comprobamos que el numero Binario no exceda 10 caracteres
-                        if (etBinario.text.toString().length < 11) {
-                            etDecimal.setText(binaryConverter.binarioDecimal(etBinario.text.toString()))
-                        } else {
-                            // Código para manejar la situación en la que el número excede 10 caracteres
-                            Toast.makeText(
-                                this,
-                                "El número Binario es mayor a 10 caracteres",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                    } else {
-                        // Código para manejar la situación en la que el número no es binario
-                        Toast.makeText(this, "El número no es binario", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    // Código para manejar la situación en la que etBinario no este vacio
-                    Toast.makeText(this, "El campo binario esta vacio", Toast.LENGTH_SHORT).show()
-                }
-
-                // El Switch está desactivado y cambia a binario
-            } else {
-                // Comprobamos que etDecimal no este vacio
-                if (etDecimal.text.isNotEmpty()) {
-                    // Comprobamos que el numero sea Entero
-                    if (etDecimal.text.toString().toIntOrNull() != null) {
-                        // Comprobamos que el numero sea positivo
-                        if (etDecimal.text.toString().toInt() > 0) {
-
-                            // Comprobamos que el numero Binario no exceda el valor maximo de 10 caracteres
-                            if (binaryConverter.decimalBinario(etDecimal.text.toString())
-                                    .toInt() < 1024
-                            ) {
-                                etBinario.setText(binaryConverter.decimalBinario(etDecimal.text.toString()))
-                            } else {
-                                // Código para manejar la situación en la que el número Binario excede 10 caracteres
-                                Toast.makeText(
-                                    this,
-                                    "El número Binario es mayor a 10 caracteres",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                        } else {
-                            // Código para manejar la situación en la que el número no es positivo
-                            Toast.makeText(
-                                this, "El número Decimal no es positivo", Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                    } else {
-                        // Código para manejar la situación en la que el número no es entero
-                        Toast.makeText(
-                            this, "El número Decimal no es entero", Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-
-                } else {
-                    // Código para manejar la situación en la que etDecimal no este vacio
-                    Toast.makeText(this, "El campo Decimal esta vacio", Toast.LENGTH_SHORT).show()
-                }
-
+        if (swCambiar.isChecked) {
+            val binario = etBinario.text.toString()
+            if (validarBinario(binario)) {
+                etDecimal.setText(binaryConverter.binarioDecimal(binario))
             }
-
+        } else {
+            val decimal = etDecimal.text.toString()
+            if (validarDecimal(decimal)) {
+                etBinario.setText(binaryConverter.decimalBinario(decimal))
+            }
         }
+    }
 
+    private fun validarBinario(binario: String): Boolean {
+        return if (binario.isEmpty()) {
+            mostrarError("El campo binario está vacío")
+            false
+        } else if (!binaryConverter.esBinario(binario)) {
+            mostrarError("El número no es binario")
+            false
+        } else if (binario.length > MAX_BINARY_LENGTH) {
+            mostrarError("El número binario es mayor a 10 caracteres")
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun validarDecimal(decimal: String): Boolean {
+        return if (decimal.isEmpty()) {
+            mostrarError("El campo decimal está vacío")
+            false
+        } else if (decimal.toIntOrNull() == null) {
+            mostrarError("El número decimal no es entero")
+            false
+        } else if (decimal.toInt() <= 0) {
+            mostrarError("El número decimal no es positivo")
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun mostrarError(mensaje: String) {
+        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 }
